@@ -4,15 +4,14 @@ metadata:
   annotations:
     name: YOLO11 custom
     type: detector
-    spec:
-      [
+    spec: '[
         { "id": 0, "name": "person", "type": "rectangle" },
         { "id": 1, "name": "bicycle", "type": "rectangle" },
         { "id": 2, "name": "car", "type": "rectangle" },
         { "id": 3, "name": "motorbike", "type": "rectangle" },
         { "id": 5, "name": "bus", "type": "rectangle" },
         { "id": 7, "name": "truck", "type": "rectangle" }
-      ]
+      ]'
 spec:
   description: YOLO v11 via onnx
   runtime: 'python:3.8'
@@ -21,7 +20,6 @@ spec:
   build:
     image: cvat.onnx.yolo11x
     baseImage: ubuntu:22.04
-
     directives:
       preCopy:
         - kind: USER
@@ -33,18 +31,16 @@ spec:
         - kind: WORKDIR
           value: /opt/nuclio
         - kind: RUN
-          value: wget https://github.com/Baerit0609/yolo11_label/raw/refs/heads/main/model/yolo11x.onnx 
+          value: wget https://github.com/Baerit0609/yolo11_label/raw/refs/heads/main/model/yolo11x.onnx
         - kind: RUN
           value: ln -s /usr/bin/python3 /usr/bin/python
-
   triggers:
     myHttpTrigger:
       numWorkers: 2
       kind: 'http'
       workerAvailabilityTimeoutMilliseconds: 10000
       attributes:
-        maxRequestBodySize: 33554432 # 32MB
-
+        maxRequestBodySize: 33554432
   platform:
     attributes:
       restartPolicy:
