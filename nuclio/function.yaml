@@ -4,7 +4,7 @@ metadata:
   annotations:
     name: YOLO11 custom
     type: detector
-    spec: |
+    spec:
       [
         { "id": 0, "name": "person", "type": "rectangle" },
         { "id": 1, "name": "bicycle", "type": "rectangle" },
