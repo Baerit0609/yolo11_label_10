@@ -1,0 +1,53 @@
+metadata:
+  name: onnx-baerit0609-yolo11x
+  namespace: cvat
+  annotations:
+    name: YOLO v11
+    type: detector
+    spec: |
+      [
+        { "id": 0, "name": "person", "type": "rectangle" },
+        { "id": 1, "name": "bicycle", "type": "rectangle" },
+        { "id": 2, "name": "car", "type": "rectangle" },
+        { "id": 3, "name": "motorbike", "type": "rectangle" },
+        { "id": 5, "name": "bus", "type": "rectangle" },
+        { "id": 7, "name": "truck", "type": "rectangle" }
+      ]
+spec:
+  description: YOLO v11 via onnx
+  runtime: 'python:3.8'
+  handler: main:handler
+  eventTimeout: 30s
+  build:
+    image: cvat.onnx.yolo11x
+    baseImage: ubuntu:22.04
+
+    directives:
+      preCopy:
+        - kind: USER
+          value: root
+        - kind: RUN
+          value: apt update && apt install --no-install-recommends -y wget python3-pip
+        - kind: RUN
+          value: pip install onnxruntime opencv-python-headless pillow pyyaml
+        - kind: WORKDIR
+          value: /opt/nuclio
+        - kind: RUN
+          value: wget https://github.com/sygstat/yolov11-custom/raw/refs/heads/main/model/yolo11n-nms.onnx 
+        - kind: RUN
+          value: ln -s /usr/bin/python3 /usr/bin/python
+
+  triggers:
+    myHttpTrigger:
+      numWorkers: 2
+      kind: 'http'
+      workerAvailabilityTimeoutMilliseconds: 10000
+      attributes:
+        maxRequestBodySize: 33554432 # 32MB
+
+  platform:
+    attributes:
+      restartPolicy:
+        name: always
+        maximumRetryCount: 3
+      mountMode: volume
