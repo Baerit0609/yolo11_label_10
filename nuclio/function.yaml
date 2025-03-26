@@ -6,11 +6,11 @@ metadata:
     type: detector
     spec: '[
         { "id": 0, "name": "person", "type": "rectangle" },
-        { "id": 1, "name": "bicycle", "type": "rectangle" },
-        { "id": 2, "name": "car", "type": "rectangle" },
-        { "id": 3, "name": "motorbike", "type": "rectangle" },
-        { "id": 5, "name": "bus", "type": "rectangle" },
-        { "id": 7, "name": "truck", "type": "rectangle" }
+        { "id": 1, "name": "16_cycle", "type": "rectangle" },
+        { "id": 2, "name": "1_1_car_suv", "type": "rectangle" },
+        { "id": 3, "name": "13_motor_cycle", "type": "rectangle" },
+        { "id": 5, "name": "2_2_bus[large]", "type": "rectangle" },
+        { "id": 7, "name": "3_truck_under_2.5t", "type": "rectangle" }
       ]'
 spec:
   description: YOLO v11 via onnx
