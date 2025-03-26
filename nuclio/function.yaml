@@ -5,7 +5,7 @@ metadata:
     name: YOLO11 custom
     type: detector
     spec: '[
-        { "id": 0, "name": "person", "type": "rectangle" },
+        { "id": 0, "name": "14_person", "type": "rectangle" },
         { "id": 1, "name": "16_cycle", "type": "rectangle" },
         { "id": 2, "name": "1_1_car_suv", "type": "rectangle" },
         { "id": 3, "name": "13_motor_cycle", "type": "rectangle" },
