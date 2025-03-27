@@ -10,7 +10,7 @@ import onnxruntime as ort
 class ModelHandler:
     def __init__(self, labels):
         self.model = None
-        self.load_network(model="yolo11x.onnx")
+        self.load_network(model="yolo11x-nms.onnx")
         self.labels = labels
 
     def load_network(self, model):

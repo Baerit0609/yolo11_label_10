@@ -31,7 +31,7 @@ spec:
         - kind: WORKDIR
           value: /opt/nuclio
         - kind: RUN
-          value: wget https://github.com/Baerit0609/yolo11_label/raw/refs/heads/main/model/yolo11x.onnx
+          value: wget https://github.com/Baerit0609/yolo11_label/raw/refs/heads/main/model/yolo11x-nms.onnx
         - kind: RUN
           value: ln -s /usr/bin/python3 /usr/bin/python
   triggers:
