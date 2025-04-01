@@ -52,7 +52,7 @@ def nms_numpy(boxes, scores, iou_threshold=0.5):
 class ModelHandler:
     def __init__(self, labels):
         self.model = None
-        self.load_network(model="yolo11x.onnx")
+        self.load_network(model="yolo11m.onnx")
         self.labels = labels
 
     def load_network(self, model):

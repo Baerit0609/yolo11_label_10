@@ -1,5 +1,5 @@
 metadata:
-  name: onnx-baerit0609-yolo11x
+  name: onnx-baerit0609-yolo11m
   namespace: cvat
   annotations:
     name: YOLO11 custom
@@ -19,7 +19,7 @@ spec:
   handler: main:handler
   eventTimeout: 30s
   build:
-    image: cvat.onnx.yolo11x
+    image: cvat.onnx.yolo11m
     baseImage: ubuntu:22.04
     directives:
       preCopy:
@@ -32,7 +32,7 @@ spec:
         - kind: WORKDIR
           value: /opt/nuclio
         - kind: RUN
-          value: wget https://github.com/Baerit0609/yolo11_label/raw/refs/heads/main/model/yolo11x.onnx
+          value: wget https://github.com/Baerit0609/yolo11_label/raw/refs/heads/main/model/yolo11m.onnx
         - kind: RUN
           value: ln -s /usr/bin/python3 /usr/bin/python
   triggers:
