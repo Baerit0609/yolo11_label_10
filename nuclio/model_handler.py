@@ -115,12 +115,14 @@ class ModelHandler:
             # ONNX 추론 실행
             detections = self.model.run(self.output_details, inp)[0]
 
+            print("Detection raw shape:", detections.shape)  # 디버그 로그
+
             # 출력 형태에 따라 처리:
-            # 만약 detections shape가 (1, N, 6)라면 (N, 6)으로 변경
             if len(detections.shape) == 3:
+                # (1, N, 6) 형태 -> (N, 6)
                 detections = detections[0]
             elif len(detections.shape) == 2:
-                # YOLOv7 형식: (N, 7) -> 박스 정보가 1~4열, 클래스와 점수가 5열, 마지막 열에 있음
+                # YOLOv7 형식: (N, 7)
                 boxes = detections[:, 1:5].copy()
                 class_ids = detections[:, 5].copy()
                 scores = detections[:, -1].copy()
@@ -134,19 +136,18 @@ class ModelHandler:
                 boxes = boxes / ratio
                 boxes = boxes.round().astype(np.int32)
 
-                # NMS 적용
                 keep_indices = nms_numpy(boxes, scores, iou_threshold=iou_threshold)
+                print("Selected indices after NMS (YOLOv7):", keep_indices)  # 디버그 로그
                 boxes = boxes[keep_indices]
                 scores = scores[keep_indices]
                 class_ids = class_ids[keep_indices]
                 return [boxes, class_ids, scores]
 
-            # 여기서는 detections가 (N, 6) 형태로 가정
+            # 기본: detections가 (N, 6) 형태라 가정
             boxes = detections[:, :4].copy()
             scores = detections[:, 4].copy()
             class_ids = detections[:, 5].copy()
 
-            # 패딩 제거 및 원본 이미지 스케일로 복원
             dw, dh = dwdh
             boxes[:, 0] -= dw
             boxes[:, 2] -= dw
@@ -155,11 +156,14 @@ class ModelHandler:
             boxes = boxes / ratio
             boxes = boxes.round().astype(np.int32)
 
-            # NMS 후처리 적용
             keep_indices = nms_numpy(boxes, scores, iou_threshold=iou_threshold)
+            print("Selected indices after NMS:", keep_indices)  # 디버그 로그
+
             boxes = boxes[keep_indices]
             scores = scores[keep_indices]
             class_ids = class_ids[keep_indices]
+
+            print("Final boxes:", boxes)  # 디버그 로그
 
             return [boxes, class_ids, scores]
 
