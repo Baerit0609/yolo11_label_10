@@ -2,7 +2,7 @@ metadata:
   name: onnx-baerit0609-yolo11m_t10
   namespace: cvat
   annotations:
-    name: YOLO11 custom
+    name: YOLO11 custom_t10
     type: detector
     spec: |
       [
