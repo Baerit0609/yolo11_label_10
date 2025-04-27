@@ -1,5 +1,5 @@
 metadata:
-  name: onnx-baerit0609-yolo11m
+  name: onnx-baerit0609-yolo11m_t10
   namespace: cvat
   annotations:
     name: YOLO11 custom
